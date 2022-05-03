@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+int main(void) {
+	// your code goes here
+	int t;
+	scanf("%d\n",&t);
+	while(t--)
+	{
+	    int x,y;
+	    scanf("%d %d",&x,&y);
+	    if(x<y)
+	    {
+	        printf("FIRST\n");
+	    }
+	    else if(x==y)
+	    {
+	        printf("ANY\n");  
+	    }
+	    if(x>y)
+	    {
+	         printf("SECOND\n");  
+	    }
+	}
+	return 0;
+}
+
