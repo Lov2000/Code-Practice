@@ -1,0 +1,152 @@
+There are N sweets in the store. The cost of the ith sweet is Ai rupees. Chef is a regular customer, so after buying the ith sweet, he gets a cashback of Bi rupees.
+
+Chef has R rupees. He is fond of all the sweets, so he wants you to calculate the maximum number of sweets he can buy. Note that he can buy the same type of sweet multiple times, as long as he has the money to do so.
+
+Input Format
+The first line of input will contain T, the number of test cases.
+Each test case consists of three lines of input.
+The first line of each test case contains two space-separated integers N and R — the number of sweets in the shop and the amount of money Chef has.
+The second line of each test case contains N space-separated integers A1,A2,…,AN.
+The third line of each test case contains N space-separated integers B1,B2,…,BN.
+Output Format
+For each query, print on a new line the maximum number of sweets Chef can buy.
+
+Constraints
+1≤T≤2⋅105
+1≤N≤2⋅105
+1≤Bi<Ai≤109
+1≤R≤109
+It is guaranteed that the sum of N over all test cases does not exceed 2⋅105
+Sample Input 1 
+3
+3 3
+2 3 4
+1 1 1
+2 4
+5 4
+1 2
+4 10
+4 4 5 5
+1 2 4 2
+Sample Output 1 
+2
+1
+7
+Explanation
+Test case 1: Chef buys the first sweet, which costs 2 rupees and has a cashback of 1 rupee. He now has 3−2+1=2 rupees remaining. He once again buys the first sweet, which leaves him with 1 rupee, at which point no more sweets can be bought.
+
+Test case 2: Chef buys the second sweet once.
+
+
+
+
+
+
+
+code----
+
+#include<bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+using namespace std;
+
+#pragma GCC optimize("Ofast")
+#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,avx2,fma")
+#pragma GCC optimize("unroll-loops")
+
+/*----------------------------------<Defines & Typedefs>---------------------------------------*/
+typedef long long int ll;
+typedef long double ld;
+typedef pair<ll,ll> pl;
+typedef pair<double,double> pd;
+typedef vector<pair<ll,ll>> vpl;
+typedef vector<vector<ll> > vvl;
+typedef vector<vector<pair<ll,ll>> > vvpl;
+typedef vector<long long> vl;
+typedef vector<char> vc;
+typedef vector<vl> vvl;
+typedef deque<long long> dl;
+typedef tree<int,null_type,less<int>,rb_tree_tag,
+tree_order_statistics_node_update> indexed_set;
+
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+#define cint(n) ll n;cin>>n;cin.ignore();
+#define input1(a,n) for(ll i=0;i<n;i++) {cint(x);a.push_back(x);}
+#define input(a,n) for(ll i=0;i<n;i++){cint(x);a[i]=x;}
+#define rep(i,a,b) for(ll i=a;i<b;i++)
+#define rep1(i,a,b) for(ll i=a;i>=b;i--)
+#define all(v) v.begin(),v.end()
+#define set_bits __builtin_popcountll
+#define sz(x) ((int)(x).size())
+#define dbg(x) cout<<#x<<":"<<x<<" "; 
+#define endl "\n"
+
+const ll mod = 1e9 + 7;
+const ll mod1 = 998244353;
+const ll inf = 1e18;
+const ll MX = 1e6 + 1;
+const double PI = 3.141592653589793238;
+//cout << (double)clock()/CLOCKS_PER_SEC << endl;
+
+template<typename T> ostream& operator<<(ostream& out,const vector<T>& v){out<<'[';for(auto i=v.begin();i!=v.end();i++) out<<(i!=v.begin()?",":"")<<(*i);return(out<<']');}
+template<typename T> ostream& operator<<(ostream& out,const set<T>& s){out<<'[';for(auto i=s.begin();i!=s.end();i++) out<<(i!=s.begin()?",":"")<<(*i);return(out<<']');}
+template<typename T> ostream& operator<<(ostream& out,const unordered_set<T>& s){out<<endl<<'[';for(auto i=s.begin();i!=s.end();i++) out<<(i!=s.begin()?",":"")<<(*i);return(out<<']');}
+template<typename T1,typename T2> ostream& operator<<(ostream& out,const pair<T1,T2> &p){return(out<<'('<< p.first<<","<<p.second<<')');}
+template<typename T1,typename T2> ostream& operator<<(ostream& out,const map<T1,T2> &m){out<<'{'<<endl;for(auto x:m) out<<"  "<<x.first<<" -> "<<x.second<<endl;return(out<<'}');}
+template<typename T1,typename T2> ostream& operator<<(ostream& out,const unordered_map<T1,T2> &m){out<<'{'<<endl;for(auto x:m) out<<"  "<<x.first<<" -> "<<x.second<<endl;return(out<<'}');}
+
+//----------------Code starts--------------------------------------
+bool cmp(pair<ll,ll> &a,pair<ll,ll> &b)
+{
+     return (a.first - a.second) < (b.first - b.second);;
+}
+pair<ll, ll> test(ll s, ll a, ll b) {
+    ll sweets = ((s  - a) / (a - b))+1;
+    ll rem = s - sweets * (a -  b);
+    
+    if(rem >= a) {
+        rem -= a - b;
+        sweets++;
+    }
+    return {sweets, rem};
+}
+
+int main(){
+    fastio()
+    cint(t);
+    while(t--){
+       ll n,r;
+       cin>>n>>r;
+       ll a[n];
+       ll b[n];
+       for(int i=0;i<n;i++)
+       {
+           cin>>a[i];
+       }
+       for(int i=0;i<n;i++)
+       {
+           cin>>b[i];
+       }
+       vector<pair<ll,ll>> v;
+       for(int i=0;i<n;i++)
+       {
+           v.push_back({a[i],b[i]});
+       }
+       
+       sort(v.begin(),v.end(),cmp);
+       //int count=0;
+       
+       ll ans = 0, rem = r;
+       for(int i=0;i<n;i++) {
+        if(v[i].first <= rem) {
+            pair<ll, ll> p = test(rem, v[i].first, v[i].second);
+            ans += p.first;
+            rem = p.second;
+            
+        } 
+    
+    }
+        cout<<ans<<endl;
+    }
+    return 0;
+}
