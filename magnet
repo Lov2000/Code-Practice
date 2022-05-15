@@ -1,0 +1,320 @@
+There is an array A with N elements. Each element of A has a fixed polarity: either north or south.
+
+Chef is allowed to perform some (possibly zero) operations on the array A. In one operation, Chef can:
+
+Pick some subarray of array A, such that, the first and last elements of the subarray have different polarities, and, rearrange the elements in this subarray any way he wants.
+Note that the polarity of each element remains unchanged after an operation.
+
+Find the minimum number of operations required to sort the array in non-decreasing order, or state that it is impossible.
+
+A subarray of A is obtained by deletion of several (possibly, zero or all) elements from the beginning and several (possibly, zero or all) elements from the end.
+
+Input Format
+The first line contains an integer T, denoting the number of test cases. The T test cases then follow.
+The first line of each test case contains a single integer N.
+The second line of each test case contains N space-separated integers A1,A2,…,AN.
+The third line of each test case contains a string of length N, the ith character of which is either N or S, representing that the ith element of A has north or south polarity, respectively.
+Output Format
+For each test case, if it impossible to sort the array, output −1. Otherwise, output a single integer: the minimum number of operations required to sort the array.
+
+Constraints
+1≤T≤105
+1≤N≤2⋅105
+1≤Ai≤109
+The sum of N across all test cases doesn't exceed 2⋅105.
+Subtasks
+Subtask #1 (100 points): original constraints
+
+Sample Input 1 
+6
+5
+1 3 2 3 7
+NNSNS
+2
+2 1
+SS
+3
+1 8 12
+SNS
+3
+3 2 1
+NSN
+5
+1 2 3 5 4
+NSNSN
+5
+1 1 2 2 1
+SNSNN
+Sample Output 1 
+1
+-1
+0
+2
+1
+1
+Explanation
+Let's represent elements with a polarity of north in red, and elements with a polarity of south in blue. The polarity of each element is also labelled above it.
+
+In the first test case, we can sort the array in a single operation as follows.
+
+Rearrange the subarray [A1,A2,A3]: [1N,3N,2S,3N,7S]→[1N,2S,3N,3N,7S].
+In the second test case, the array [2S,1S] cannot be sorted, since no operations can be performed.
+
+In the third test case, the array is already sorted, so the answer is 0.
+
+In the fourth test case, we can sort the array in two operations as follows.
+
+Rearrange the subarray [A2,A3]: [3N,2S,1N]→[3N,1N,2S].
+Rearrange the subarray [A1,A2,A3]: [3N,1N,2S]→[1N,2S,3N]
+
+code=-=----
+
+#include<bits/stdc++.h>
+#define int long long
+#define deb(x) cout << #x <<"="<< x << "\n"
+#define deb2(x,y) cout<<#x<<"="<<x<<" , "<<#y<<"="<<y<<"\n"
+#define all(x) x.begin(), x.end()
+#define sortall(x) sort(all(x))
+#define sortalld(x) sort(all(x),greater<int> ())
+#define printv(v) for(auto it: v) cout<<it<<" "; cout<<"\n"
+#define pb push_back
+
+using namespace std;
+const int M = 1e9+7;
+
+bool isEven(int n);
+bool isPrime(int n);
+int power(int a, int b);
+int abmodm(int a, int b, int m);
+int gcd(int a, int b); 
+int lcm (int a, int b);
+bool miller(long long n);
+int multiply(int a, int b, int m);
+int extendedEuclid(int a, int b, int& x, int& y);
+
+void solve(){   
+    //taking inputs
+    int n;
+    cin>>n;
+    vector<int> arr(n);
+    for(int i = 0 ; i < n ;i++){
+        cin>>arr[i];
+    }
+    string s;
+    cin>>s;
+    
+    //generating sorted array
+    vector<int> brr(arr);
+    sortall(brr);
+    if(arr==brr)
+    {
+        cout<<0<<"\n";
+        return;
+    }
+    
+    //NNNNN or SSSSSSSS
+    int cntn = 0;
+    int cnts = 0;
+    for(int k = 0 ; k < n  ;k++){
+        if(s[k] == 'N'){
+            cntn++;
+        } else{
+            cnts++;
+        }
+    }
+    
+    if(cntn == 0 || cnts == 0){
+        cout<<-1<<"\n";
+        return;
+    }
+    
+    //finding the part which is already sorted in non decreasing order
+    int i = 0;
+    while(arr[i]==brr[i] && i < n){
+        i++;
+    }
+    int j = n-1;
+    while(arr[j]==brr[j] && j>= 0){
+        j--;
+    }
+    
+    //sorting the unsorted part
+    
+    
+    int ans = 0;
+    
+    if(s[i]!=s[j]){
+        cout<<"1\n";
+        return;
+    }
+    int a = 0, b= 0;
+    for(int k = 0 ; k < i ; k++){
+        if(s[k]!= s[j]){
+            a = 1;
+            
+        }
+    }
+    for(int k = j+1 ; k < n ; k++){
+        if(s[k]!= s[i]){
+            b = 1;
+        }
+    }
+    
+    if(a == 1|| b == 1){
+        cout<<"1\n";
+    }
+    else{
+        cout<<"2\n";
+    }
+        
+
+    
+    
+    
+    
+    
+    
+    
+    
+        
+        
+    
+}
+
+
+signed main(){
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+#ifdef SIEVE
+    sieve();
+#endif
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int t = 1;
+    cin>>t;
+    while(t--){
+        solve();
+    }
+    return 0;
+}
+
+bool isEven(int n)
+{
+    return (!(n & 1));
+}
+
+bool isPrime(int n){
+    int cnt = 0;
+    for(int i = 1 ; i * i <= n;i++){
+        if(n%i==0){
+            cnt++;
+            if(n/i != i){
+                cnt++;
+            }
+        }
+    }
+    return cnt == 2;
+}
+
+int power(int a, int b) {
+    int res = 1;
+    while (b > 0) {
+        if (b & 1)
+            res = res * a;
+        a = a * a;
+        b >>= 1;
+    }
+    return res;
+}
+
+int abmodm(int a, int b, int m) {
+    a %= m;
+    int res = 1;
+    while (b > 0) {
+        if (b & 1)
+            res = res * a % m;
+        a = a * a % m;
+        b >>= 1;
+    }
+    return res;
+}
+
+
+int gcd(int a, int b) {
+    if (!a || !b)
+        return a | b;
+    unsigned shift = __builtin_ctz(a | b);
+    a >>= __builtin_ctz(a);
+    do {
+        b >>= __builtin_ctz(b);
+        if (a > b)
+            swap(a, b);
+        b -= a;
+    } while (b);
+    return a << shift;
+}
+
+int lcm (int a, int b) {
+    return a*b / gcd(a, b) ;
+}
+
+
+int multiply(int a, int b, int m){
+    int result = 0;
+    while(b>0){
+        if(b & 1){
+            result = result + a;
+            result %= m;
+        }
+        a <<= 1;
+        a %= m;
+        b >>= 1;
+    }
+    return result;
+}
+
+bool miller(int n){
+    if(n <=1 || n % 2 == 0){
+        if(n != 2){
+            return false;
+        }
+    }
+    if(n == 2 || n == 3){
+        return true;
+    }
+    int d = n-1;
+    while(d % 2 == 0){
+        d /= 2;
+    }
+    int a[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37};
+    for(int i = 0; i < 12 && a[i] < n; ++i){
+        int temp = d;
+        int mod = abmodm(a[i], temp, n);
+        if(mod == 1){
+            continue;
+        }
+        while(temp != n-1 && mod != n-1){
+            mod = multiply(mod, mod, n);
+            temp *= 2;
+              
+        }
+        if(mod != n-1){
+            return false;
+        }  
+    }
+    return true;
+}
+int extendedEuclid(int a, int b, int& x, int& y) {
+    x = 1, y = 0;
+    int x1 = 0, y1 = 1, a1 = a, b1 = b;
+    while (b1) {
+        int q = a1 / b1;
+        tie(x, x1) = make_tuple(x1, x - q * x1);
+        tie(y, y1) = make_tuple(y1, y - q * y1);
+        tie(a1, b1) = make_tuple(b1, a1 - q * b1);
+    }
+    return a1;
+}
