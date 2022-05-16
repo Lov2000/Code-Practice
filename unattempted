@@ -1,0 +1,53 @@
+CodeChef recently revamped its practice page to make it easier for users to identify the next problems they should solve by introducing some new features:
+
+Recent Contest Problems - contains only problems from the last 2 contests
+Separate Un-Attempted, Attempted, and All tabs
+Problem Difficulty Rating - the Recommended dropdown menu has various difficulty ranges so that you can attempt the problems most suited to your experience
+Popular Topics and Tags
+Our Chef is currently practicing on CodeChef and is a beginner. The count of ‘All Problems’ in the Beginner section is X. Our Chef has already ‘Attempted’ Y problems among them. How many problems are yet ‘Un-attempted’?
+
+Input Format
+The first and only line of input contains two space-separated integers X and Y — the count of 'All problems' in the Beginner's section and the count of Chef's 'Attempted' problems, respectively.
+Output Format
+Output a single integer in a single line — the number of problems that are yet 'Un-attempted'
+
+Constraints
+1≤Y≤X≤1000
+Subtasks
+Subtask 1 (100 points):
+Original constraints.
+Sample Input 1 
+10 4
+Sample Output 1 
+6
+Sample Input 2 
+10 10
+Sample Output 2 
+0
+Sample Input 3 
+1000 990
+Sample Output 3 
+10
+Sample Input 4 
+500 1
+Sample Output 4 
+499
+
+code------
+
+#include <stdio.h>
+
+int main(void) {
+    int x,y,res;
+	scanf("%d%d",&x,&y);
+	res=x-y;
+	printf("%d\n",res);
+	    
+	   
+	    
+	  
+	    
+	
+	return 0;
+}
+
