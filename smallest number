@@ -1,0 +1,70 @@
+Consider a currency system in which there are notes of six denominations, namely, Rs. 1, Rs. 2, Rs. 5, Rs. 10, Rs. 50, Rs. 100.
+If the sum of Rs. N is input, write a program to computer smallest number of notes that will combine to give Rs. N.
+
+Input
+The first line contains an integer T, total number of testcases. Then follow T lines, each line contains an integer N.
+
+Output
+For each test case, display the smallest number of notes that will combine to give N, in a new line.
+
+Constraints
+1 ≤ T ≤ 1000
+1 ≤ N ≤ 1000000
+Example
+Input
+3 
+1200
+500
+242
+
+Output
+12
+5
+7
+
+code-----
+
+#include <stdio.h>
+
+int main(void) {
+	// your code goes here
+	int test,amt,n,notes;
+	scanf("%d",&test);
+	for(int i=0;i<test;i++){
+	    notes=0;
+	    scanf("%d",&amt);
+	    if(amt>=100){
+	        n=amt/100;
+	        notes=notes+n;
+	        amt=amt-n*100;
+	    }
+	    if(amt>=50){
+	        n=amt/50;
+	        notes=notes+n;
+	        amt=amt-n*50;
+	    }
+	    if(amt>=10){
+	        n=amt/10;
+	        notes=notes+n;
+	        amt=amt-n*10;
+	    }
+	    if(amt>=5){
+	        n=amt/5;
+	        notes=notes+n;
+	        amt=amt-n*5;
+	    }
+	    if(amt>=2){
+	        n=amt/2;
+	        notes=notes+n;
+	        amt=amt-n*2;
+	    }
+	    if(amt>=1){
+	        n=amt/1;
+	        notes=notes+n;
+	        amt=amt-n*1;
+	    }
+	    printf("%d\n",notes);
+	}
+	return 0;
+}
+
