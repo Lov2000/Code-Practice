@@ -1,0 +1,413 @@
+You are given a binary square matrix AA of size N \times NN×N. Let the value at cell (i, j)(i,j) be denoted by A(i, j)A(i,j).
+
+Your task is to count the number of square frames present in the grid. A square frame is defined to be a square submatrix of AA whose border elements are all '1'.
+
+Formally,
+
+A square submatrix of AA of size kk with top-left corner (i, j)(i,j) is defined to be the set of cells \{(i+x, j+y) \mid 0 \leq x, y \lt k\}{(i+x,j+y)∣0≤x,y<k}. Note that this requires i+k-1 \leq Ni+k−1≤N and j+k-1 \leq Nj+k−1≤N.
+A square frame of size kk with top-left corner (i, j)(i,j) is defined to be a square submatrix of size kk such that A(i+x, j+y) =A(i+x,j+y)= 1 whenever x = 0x=0 or y = 0y=0 or x = k-1x=k−1 or y = k-1y=k−1. There is no constraint on the values of elements strictly inside the frame.
+Refer to the sample explanation for more details.
+
+Input Format
+The first line of input contains a single integer TT denoting the number of test cases. The description of TT test cases follows.
+
+The first line of each test case contains a single integer NN denoting the size of the grid.
+
+Each of the next NN lines contains a string consisting of NN characters. The ii-th such string represents the ii-th row of AA. Each character of each string is either 0 or 1.
+
+Output Format
+For each test case, output a single integer denoting the count of square frames in the grid.
+
+Constraints
+1 \leq T \leq 10^51≤T≤10 
+5
+ 
+1 \leq N \leq 5001≤N≤500
+The grid is binary, i.e, A(i, j) =A(i,j)= 0 or 1 for every 1\leq i, j\leq N1≤i,j≤N.
+Sum of N^2N 
+2
+  over all test cases does not exceed 10^610 
+6
+ .
+Subtasks
+Subtask 1(100 points): Original constraints
+
+Sample 1:
+Input
+Output
+2
+2
+10
+00
+4
+1111
+1101
+1011
+1111
+1
+17
+Explanation:
+Test Case 11: There is 11 square frame, the submatrix containing index (1,1)(1,1).
+
+Test Case 22: There are 1414 square frames of size 11, 22 of size 22, and 11 of size 44.
+
+Some of the square frames are :
+
+The frame of size 11 containing point (3,3)(3,3).
+The frame of size 22 with corner points (1,1),(1,2),(2,2),(2,1)(1,1),(1,2),(2,2),(2,1).
+The frame of size 22 with corner points (3,3),(4,3),(4,4),(3,4)(3,3),(4,3),(4,4),(3,4).
+The frame of size 44 with corner points (1,1),(1,4),(4,4),(4,1)(1,1),(1,4),(4,4),(4,1).
+
+code-------------
+
+
+/*
+Fragments of tears crumbled down
+A breath stopping sensation
+resonated through my heart
+”Just like glass, with a fix it’ll be back to normal”
+Something like that is just a delusion, it’s too late
+I’ll run until the light shines down
+
+Even if I’m restrained by the threads of the past
+I tried screaming out ”I’m sick off it”
+I can’t take it back anymore
+I’ll flip it inside out, this heart of mine that’s become faded
+I’ll slip through this impassable door of life
+I’ll run to the other side of the sky!
+*/
+
+    
+
+#include <bits/stdc++.h>
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
+#define fastio()                  \
+    ios_base::sync_with_stdio(0); \
+    cin.tie(0);                   \
+    cout.tie(0)
+#define pb push_back
+#define show(x) cout << (#x) << " : " << x << endl;
+#define ll int
+#define ull unsigned long long
+#define ld long double
+#define pow power
+#define mp make_pair
+#define ff first
+#define ss second
+#define pii pair<int, int>
+#define pll pair<long long, long long>
+#define sq(x) ((x) * (x))
+#define all(v) v.begin(), v.end()
+#define rall(v) v.rbegin(), v.rend()
+#define siz(a) int((a).size())
+#define For(i,a,b) for(int (i)=(a);(i) < (b); ++(i))
+#define Forl(i,a,b) for(ll (i)=(a);(i) < (b); ++(i))
+#define Forn(i,a,b) for(int (i)=(a);(i) >= (b); --(i))
+#define Fornl(i,a,b) for(ll (i)=(a);(i) >= (b); --(i))
+#define endl "\n"
+#define pi 3.14159265
+//using namespace __gnu_pbds;
+using namespace std;
+//typedef tree<ll, null_type, less<ll>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;
+//typedef tree<pair<ll, ll>,null_type,less<pair<ll, ll>>,rb_tree_tag,tree_order_statistics_node_update> ordered_set;
+
+
+ll power(ll x, ll y) 
+{ 
+   ll res = 1;      
+  
+   
+    while (y > 0) 
+    { 
+       
+        if (y & 1) 
+            res = (long long)(res*x); 
+  
+
+        y = y>>1; 
+
+        x = (long long)(x*x);
+
+        //cout<<x<<'\n'; 
+    } 
+    return res; 
+} 
+
+
+
+
+// Stolen Templates
+
+template<typename F, typename S>
+ostream& operator <<(ostream& ostream, pair<F, S>& p) {
+    cout << p.first << " " << p.second;
+    return ostream;
+}
+ 
+template<typename T>
+ostream& operator <<(ostream& ostream, vector<T>& v) {
+    for(auto& element : v) {
+        cout << element << " ";
+    }
+    return ostream;
+}
+ 
+template<typename T>
+ostream& operator <<(ostream& ostream, vector<vector<T>>& v) {
+    for(auto& row : v) {
+        for(auto& cell : row) {
+            cout << cell << " ";
+        }
+        cout << "\n";
+    }
+    return ostream;
+}
+ 
+template<typename F, typename S>
+istream& operator >>(istream& istream, pair<F, S>& p) {
+    cin >> p.first >> p.second;
+    return istream;
+}
+ 
+template<typename T>
+istream& operator >>(istream& istream, vector<T>& v) {
+    for(auto& element : v) {
+        cin >> element;
+    }
+    return istream;
+}
+
+// Stolen Templates end here
+void __print(int x){cout<<x;}void __print(long long x){cout<<x;}
+void __print(double x){cout<<x;}void __print(long double x){cout<<x;}
+void __print(char x){cout<<'\''<<x<<'\'';}void __print(const char *x){cout<<'\"'<<x<<'\"';}
+void __print(const string &x){cout<<'\"'<<x<<'\"';}void __print(bool x){cout<<(x?"True":"False");}
+template<typename T,typename V>
+void __print(const pair<T,V>&x){cout<<'{';__print(x.first);cout<<',';__print(x.second);cout<<'}';}
+template<typename T>
+void __print(const T &x){int f=0;cout<<'{';for(auto &i:x)cout<<(f++?",":""),__print(i);cout<<"}";}
+void _print(){cout<<"]\n";}
+template <typename T, typename... V>
+void _print(T t, V... v) {__print(t); if (sizeof...(v)) cout << ", "; _print(v...);}
+#ifndef ONLINE_JUDGE
+#define debug(x...) cout << "[" << #x << "] = ["; _print(x)
+#else
+#define debug(x...)
+#endif
+
+struct dat{
+  int sum;
+  int lazy;
+  bool islazy;
+};
+struct segtree{
+  int n;
+  vector<int>a;
+  vector<dat>st;
+  void init(int x){
+    n=x;
+    a.resize(n+5);
+    st.resize(4*n+5);
+  }
+  void merge(dat &cur,dat &l,dat &r){
+    cur.sum=l.sum+r.sum;
+    return;
+  }
+  void build(int node,int start,int end){
+    if(start==end){
+      st[node].sum=a[start]; // the input array 
+      return;
+    }
+    int mid=(start+end)/2;
+    build(2*node,start,mid);
+    build(2*node+1,mid+1,end);
+    merge(st[node],st[2*node],st[2*node+1]);
+  }
+  void down(int node,int start,int end){
+    if(start!=end){
+      st[2*node].islazy=true;
+      st[2*node+1].islazy=true;
+      st[2*node].lazy+=st[node].lazy;
+      st[2*node+1].lazy+=st[node].lazy;
+    }
+    st[node].sum=(end-start+1)*st[node].lazy;
+    st[node].lazy=0;
+    st[node].islazy=false;
+  }
+  dat rquery(int node,int start,int end,int l,int r){
+    if(st[node].islazy) down(node,start,end);
+    if(r<start or l>end) return dat();
+    if(start>=l and end<=r) return st[node];
+    int mid=(start+end)/2;
+    dat left=rquery(2*node,start,mid,l,r);
+    dat right=rquery(2*node+1,mid+1,end,l,r);
+    dat cur;
+    merge(cur,left,right);
+    return cur;
+  }
+  void rupdate(int node,int start,int end,int l,int r,int val){
+    if(st[node].islazy) down(node,start,end);
+    if(r<start or l>end) return;
+    if(start>=l and end<=r){
+      st[node].islazy=true;
+      st[node].lazy=val;
+      down(node,start,end);
+      return;
+    }
+    int mid=(start+end)/2;
+    rupdate(2*node,start,mid,l,r,val);
+    rupdate(2*node+1,mid+1,end,l,r,val);
+    merge(st[node],st[2*node],st[2*node+1]);
+  }
+  dat pquery(int node,int start,int end,int idx){
+    if(st[node].islazy) down(node,start,end);
+    if(start==end) return st[node];
+    int mid=(start+end)/2;
+    if(idx<=mid) return pquery(2*node,start,mid,idx);
+    else return pquery(2*node+1,mid+1,end,idx);
+  }
+  void pupdate(int node,int start,int end,int idx,int val){
+    if(st[node].islazy) down(node,start,end);
+    if(start==end){
+      st[node].islazy=true;
+      st[node].lazy=val;
+      down(node,start,end);
+      return;
+    }
+    int mid=(start+end)/2;
+    if(idx<=mid) pupdate(2*node,start,mid,idx,val);
+    else pupdate(2*node+1,mid+1,end,idx,val);
+    merge(st[node],st[2*node],st[2*node+1]);
+  }
+  dat pq(int idx) {return pquery(1,1,n,idx);}
+  dat rq(int l,int r) {return rquery(1,1,n,l,r);}
+  void pu(int idx,int val) {pupdate(1,1,n,idx,val);}
+  void ru(int l,int r,int val) {rupdate(1,1,n,l,r,val);}
+};
+
+
+
+int main()
+{
+
+fastio();
+
+    ll T;
+    cin>>T;
+
+    while(T--)
+    {
+        ll n;
+        cin>>n;
+        vector <vector <char>> adj(n,vector <char> (n, '.'));
+        cin>>adj;
+
+        vector <vector <ll>> lef(n,vector<ll>(n));
+        vector <vector <ll>> down(n,vector<ll>(n));
+        vector <vector <ll>> rig(n,vector<ll>(n));
+        vector <vector <ll>> up(n,vector<ll>(n));
+
+        For(i,0,n) {
+            ll cnt = 0;
+            For(j,0,n) {
+                if (adj[i][j] == '1') cnt += 1;
+                else cnt = 0;
+                lef[i][j] = cnt;
+            }
+        }
+        For(i,0,n) {
+            ll cnt = 0;
+            Forn(j,n - 1,0) {
+                if (adj[i][j] == '1') cnt += 1;
+                else cnt = 0;
+                rig[i][j] = cnt;
+            }
+        }
+        For(i,0,n) {
+            ll cnt = 0;
+            For(j,0,n) {
+                if (adj[j][i] == '1') cnt += 1;
+                else cnt = 0;
+                up[j][i] = cnt;
+            }
+        }
+        For(i,0,n) {
+            ll cnt = 0;
+            Forn(j,n - 1,0) {
+                if (adj[j][i] == '1') cnt += 1;
+                else cnt = 0;
+                down[j][i] = cnt;
+            }
+        }
+
+        // For(i,0,n)
+        //     For(j,0,n) {
+        //         cout<<i<<' '<<j<<' '<<endl;
+        //         cout<<lef[i][j]<<' '<<rig[i][j]<<' '<<down[i][j]<<' '<<up[i][j]<<endl;
+        //     }
+
+
+        ll ans = 0;
+
+        for(ll i = 0; i <= 2 * n - 2; i++) {
+            ll x = min(i,n - 1);
+            // cout<<x<<endl;
+            segtree st;
+            st.init(x + 1);
+            vector <pll> temp;
+            for(ll y = i - x; y <= x; y++) {
+                // cout<<i - y<<' '<<y<<endl;
+                if (adj[i - y][y] == '1') {
+                    st.pu(y+1,1);
+                    // debug(min(up[i - y][y], rig[i - y][y]) - 1);
+                    temp.pb({y + min(up[i - y][y], rig[i - y][y]) - 1, y});
+                }
+            }
+            // cout<<endl;
+            sort(all(temp));
+            // debug(temp); 
+            ll idx = 0;
+            for(ll y = i - x; y <= x; y++) {
+                while (idx < siz(temp) and temp[idx].ff < y)
+                {
+                    // debug(idx,temp[idx].ss);
+                    st.pu(temp[idx].ss+1,0); 
+                    idx++;
+                }
+                if (adj[i - y][y] == '1') {
+                    ll upto = y - min(down[i - y][y], lef[i - y][y]) + 1;
+                    debug(upto+1,y+1);
+                    dat d=st.rq(upto+1, y+1);
+                    ans += d.sum;
+                    // cout<<i - y<<' '<<y<<' '<<ans<<endl;
+                }
+            }
+            // cout<<endl;
+        }
+
+        cout<<ans<<endl;
+    }
+
+return 0;
+}
+
+// check all product based operations for integer overflow
+// careful of renamed variables especially in loops
+//python interactive_runner.py python local_testing_tool.py 0 -- c.exe
+
+
+
+// 1
+// 4
+// 1111
+// 1101
+// 1011
+// 1111
+
+
+
+
+
+
+
