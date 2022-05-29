@@ -9,6 +9,8 @@ Output Format
 For each test case, output in a single line, the amount of extra water in liters that Chef can fill in the bucket without overflowing.
 
 Constraints
+
+
 1≤T≤100
 1≤X<K≤1000
 Sample Input 1 
