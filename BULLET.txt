@@ -8,6 +8,9 @@ Each test case consists of a single line of input, containing three space-separa
 Output Format
 For each test case, output in a single line the minimum time (in seconds) after which Mario should shoot the bullet, such that it hits the goomba after at least Z seconds from now.
 
+
+
+
 Constraints
 1≤T≤100
 1≤X,Y,Z≤100
