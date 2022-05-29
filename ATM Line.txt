@@ -4,6 +4,9 @@ The people come in and try to withdraw money one by one, in the increasing order
 
 For each person, determine whether they will get the required amount of money or not.
 
+
+
+
 Input
 The first line of the input contains a single integer T denoting the number of test cases. The description of T test cases follows.
 The first line of each test case contains two space-separated integers N and K.
