@@ -13,7 +13,10 @@ Second line contains N distinct integers S1,S2,…,SN - denoting the set S.
 Output Format
 For each test case, output in a single line, YES if there exists an array satisfying the given conditions, NO otherwise.
 
-You may print each character of the string in uppercase or lowercase (for example, the strings YES, yEs, yes, and yeS will all be treated as identical).
+You may print each character of the string in uppercase or lowercase (for example, the strings YES, yEs, yes, and yeS will all be treat
+
+
+ed as identical).
 
 Constraints
 1≤T≤1000
