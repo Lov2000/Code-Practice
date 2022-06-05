@@ -10,5 +10,5 @@ int main()
         maxim = k-x;
         printf("%d\n",maxim);
     }
-    return 0;
+   return 0;
 }
