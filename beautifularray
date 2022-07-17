@@ -25,6 +25,7 @@ code-----
 #include <bits/stdc++.h>
 using namespace std;
 
+
 typedef long long LL;
 typedef long double LD;
 typedef pair<int,int> pii;
